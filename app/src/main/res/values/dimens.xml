@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="todoList_fontsize">20sp</dimen>
+    <dimen name="todoentrybackgroundmargin">5dp</dimen>
 </resources>
