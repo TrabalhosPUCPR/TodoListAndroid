@@ -39,4 +39,8 @@ public class TodoListManager {
     public List<Todo> getTodos() {
         return todos;
     }
+
+    public void setTodo(int index, Todo todos) {
+        this.todos.set(index, todos);
+    }
 }

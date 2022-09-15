@@ -1,7 +1,6 @@
 package com.example.todolistandroid.Controller;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,7 +38,15 @@ public class MainActivity extends AppCompatActivity {
         resultAddTodo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK){
                 todoAdapter.notifyDataSetChanged();
-
+                // TODO: 9/15/22
+                // fazer notificacao de criacao feita com sucesso
+            }
+        });
+        resultEditTodo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == RESULT_OK){
+                todoAdapter.notifyDataSetChanged();
+                // TODO: 9/15/22
+                // fazer notificacao de edicao feita com sucesso
             }
         });
     }
@@ -53,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
         rcvTodos.setAdapter(todoAdapter);
     }
 
+    // TODO: 9/15/22
+    void editTodo(int index){}
+    void removeTodo(int index){}
+
     void addTodo(){
         Intent intent = new Intent(this, AddEditActivity.class);
-        startActivity(intent);
+        intent.putExtra("type", 0);
+        resultAddTodo.launch(intent);
     }
 }

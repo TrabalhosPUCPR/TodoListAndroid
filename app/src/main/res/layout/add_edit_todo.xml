@@ -8,25 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="7dp">
 
         <EditText
+            android:id="@+id/todo_edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/todo_value_name"
             android:textColor="@color/placeholder_todo_add_edit"/>
         <EditText
+            android:id="@+id/todo_edit_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/todo_value_desc"
-            android:layout_marginTop="14dp"
             android:textColor="@color/placeholder_todo_add_edit"/>
         <EditText
+            android:id="@+id/todo_edit_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/todo_value_date"
-            android:textColor="@color/placeholder_todo_add_edit"
-            android:layout_marginTop="14dp"/>
+            android:textColor="@color/placeholder_todo_add_edit"/>
     </LinearLayout>
 
     <FrameLayout
@@ -35,6 +37,7 @@
         android:layout_margin="15dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/todo_edit_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
@@ -42,6 +45,7 @@
             android:contentDescription="Cancel"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/todo_edit_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_save"
