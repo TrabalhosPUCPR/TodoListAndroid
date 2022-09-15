@@ -1,6 +1,7 @@
 package com.example.todolistandroid.Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TodoListManager {
@@ -12,7 +13,16 @@ public class TodoListManager {
         return instance;
     }
 
-    public TodoListManager() {}
+    private TodoListManager() {
+        todos.add(new Todo("yes", "yes", new Date()));
+        todos.add(new Todo("uau", "uauaua", new Date()));
+        todos.add(new Todo("dsdssd", "no", new Date()));
+        todos.add(new Todo("dsdssd", "no", new Date()));
+        todos.add(new Todo("dsdssd", "no", new Date()));
+        todos.add(new Todo("dsdssd", "no", new Date()));
+        todos.add(new Todo("dsdssd", "no", new Date()));
+
+    }
 
     public void addTodo(Todo todo){
         this.todos.add(todo);
@@ -24,5 +34,9 @@ public class TodoListManager {
         Todo foo = this.todos.get(index);
         this.todos.remove(index);
         return foo;
+    }
+
+    public List<Todo> getTodos() {
+        return todos;
     }
 }

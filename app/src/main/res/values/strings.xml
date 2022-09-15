@@ -2,4 +2,7 @@
     <string name="app_name">TodoListAndroid</string>
     <string name="title">Todo List</string>
     <string name="add_desc">ADD</string>
+    <string name="todo_value_name">Name</string>
+    <string name="todo_value_desc">Description</string>
+    <string name="todo_value_date">Date</string>
 </resources>
