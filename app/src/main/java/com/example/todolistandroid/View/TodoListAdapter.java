@@ -1,17 +1,25 @@
 package com.example.todolistandroid.View;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.todolistandroid.Controller.AddEditActivity;
 import com.example.todolistandroid.Model.Todo;
+import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -39,6 +47,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
         holder.name.setText(todo.getName());
         holder.desc.setText(todo.getDescription());
         holder.date.setText(todo.getDate().toString());
+
+        boolean isExpanded = todos.get(position).isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -48,10 +59,11 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
 
     public class todoHolder extends RecyclerView.ViewHolder{
 
-        LinearLayout todoLayout;
+        LinearLayout todoLayout, expandableLayout;
         TextView name;
         TextView desc;
         TextView date;
+        FloatingActionButton editFab, removeFab;
 
         public todoHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,6 +72,29 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             this.name = itemView.findViewById(R.id.todoList_name);
             this.desc = itemView.findViewById(R.id.todoList_desc);
             this.date = itemView.findViewById(R.id.todoList_date);
+            this.expandableLayout = itemView.findViewById(R.id.expandable_todo);
+
+            this.editFab = itemView.findViewById(R.id.fab_edit_todo);
+            this.removeFab = itemView.findViewById(R.id.fab_delete_todo);
+
+            this.name.setOnClickListener(view -> {
+                Todo todo = todos.get(getAdapterPosition());
+                todo.expanded();
+                notifyItemChanged(getAdapterPosition());
+            });
+
+            this.removeFab.setOnClickListener(view -> {
+                TodoListManager.getInstance().removeTodo(this.getAdapterPosition());
+                Toast.makeText(this.itemView.getContext(), "Removido com sucesso!", Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+            });
+
+            this.editFab.setOnClickListener(view -> {
+                Intent intent = new Intent(this.itemView.getContext(), AddEditActivity.class);
+                intent.putExtra("type", 1);
+                intent.putExtra("index", this.getAdapterPosition());
+                this.itemView.getContext().startActivity(intent);
+            });
         }
     }
 }

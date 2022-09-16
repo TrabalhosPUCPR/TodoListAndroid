@@ -37,9 +37,10 @@ public class AddEditActivity extends AppCompatActivity {
 
         FloatingActionButton fabSave = findViewById(R.id.todo_edit_apply);
         FloatingActionButton fabCancel = findViewById(R.id.todo_edit_cancel);
-        int index = this.getIntent().getIntExtra("type", -1);
+        int index = this.getIntent().getIntExtra("index", -1);
 
-        if(index == 2){
+        if(index != -1){
+
             newTodo = TodoListManager.getInstance().getTodo(index);
 
             newName.setText(newTodo.getName());

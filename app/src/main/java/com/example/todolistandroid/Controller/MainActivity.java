@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
@@ -61,8 +62,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO: 9/15/22
-    void editTodo(int index){}
-    void removeTodo(int index){}
+    public void editTodo(int index){}
+    public void removeTodo(int index){
+        TodoListManager.getInstance().removeTodo(index);
+        Toast.makeText(this, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
+    }
 
     void addTodo(){
         Intent intent = new Intent(this, AddEditActivity.class);

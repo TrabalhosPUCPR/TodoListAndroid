@@ -7,11 +7,13 @@ public class Todo {
     private String name;
     private String description;
     private Date date;
+    private boolean expanded;
 
     public Todo(String name, String description, Date date) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.expanded = false;
     }
 
     public String getName() {
@@ -36,5 +38,13 @@ public class Todo {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void expanded() {
+        this.expanded = !this.expanded;
     }
 }

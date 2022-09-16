@@ -1,46 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="top|center"
-    android:id="@+id/todoLayout">
+    android:id="@+id/todoLayout"
+    android:orientation="vertical"
+    android:background="@drawable/todoentrybackground"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:id="@+id/todoList_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="@dimen/todoList_Namefontsize"
+        android:padding="10dp"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/expandable_todo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="vertical"
-        android:background="@drawable/todoentrybackground">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/todoList_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="@dimen/todoList_fontsize"/>
         <View
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_height="1dp"
             android:background="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_marginBottom="8dp"/>
+
         <TextView
             android:id="@+id/todoList_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="description"
-            android:textSize="@dimen/todoList_fontsize"/>
+            android:textSize="@dimen/todoList_fontsize"
+            android:layout_marginStart="15sp"
+            android:layout_marginBottom="10sp"/>
+
         <View
             android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_height="1dp"
             android:background="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_marginBottom="8dp"/>
+
         <TextView
             android:id="@+id/todoList_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15sp"
             android:text="date"
-            android:textSize="@dimen/todoList_fontsize"/>
+            android:textSize="@dimen/todoList_fontsize"
+            android:layout_marginBottom="10sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_delete_todo"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:fabCustomSize="45dp"
+                android:backgroundTint="#FF2727"
+                android:layout_gravity="start|center"
+                android:src="@android:drawable/ic_delete"
+                android:contentDescription="Delete" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_edit_todo"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:fabCustomSize="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center|end"
+                android:src="@android:drawable/ic_menu_edit"
+                android:contentDescription="Edit" />
+        </FrameLayout>
 
     </LinearLayout>
-
 </LinearLayout>
