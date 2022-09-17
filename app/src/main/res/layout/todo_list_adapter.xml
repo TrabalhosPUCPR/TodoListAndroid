@@ -7,7 +7,10 @@
     android:id="@+id/todoLayout"
     android:orientation="vertical"
     android:background="@drawable/todoentrybackground"
-    android:layout_margin="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -73,7 +76,8 @@
             android:textColor="@color/gray_600"
             android:text="date"
             android:textSize="@dimen/todoList_fontsize"
-            android:layout_marginBottom="10sp"/>
+            android:layout_marginBottom="10sp"
+            android:textIsSelectable="true"/>
 
         <View
             android:layout_width="match_parent"

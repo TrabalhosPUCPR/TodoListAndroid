@@ -61,7 +61,8 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
         holder.removeFab.setOnClickListener(view -> {
             TodoListManager.getInstance().removeTodo(position);
             Toast.makeText(context, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
-            notifyDataSetChanged();
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, TodoListManager.getInstance().getTodos().size());
         });
 
         holder.editFab.setOnClickListener(view -> {
