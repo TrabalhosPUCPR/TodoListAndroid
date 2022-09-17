@@ -5,4 +5,7 @@
     <string name="todo_value_name">Name</string>
     <string name="todo_value_desc">Description</string>
     <string name="todo_value_date">Date</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="githubLink">https://github.com/TrabalhosPUCPR/TodoListAndroid</string>
 </resources>

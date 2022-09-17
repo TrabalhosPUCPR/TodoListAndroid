@@ -5,6 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Controller.MainActivity"
     android:orientation="vertical">
+    <View
+        android:id="@+id/popup_menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -22,15 +26,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|center"/>
         </ScrollView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/mainFab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:contentDescription="@string/add_desc"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_margin="20dp"/>
     </FrameLayout>
 
 </LinearLayout>

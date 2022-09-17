@@ -3,4 +3,5 @@
     <dimen name="todoList_Namefontsize">22sp</dimen>
     <dimen name="todoList_fontsize">18sp</dimen>
     <dimen name="todoentrybackgroundmargin">5dp</dimen>
+    <dimen name="Actionbar_iconSize">40dp</dimen>
 </resources>

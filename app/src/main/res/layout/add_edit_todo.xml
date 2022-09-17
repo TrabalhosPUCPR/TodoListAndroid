@@ -30,26 +30,4 @@
             android:text="@string/todo_value_date"
             android:textColor="@color/placeholder_todo_add_edit"/>
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/todo_edit_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:layout_gravity="bottom|start"
-            android:contentDescription="Cancel"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/todo_edit_apply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_save"
-            android:layout_gravity="bottom|end"
-            android:contentDescription="Save"/>
-    </FrameLayout>
 </LinearLayout>

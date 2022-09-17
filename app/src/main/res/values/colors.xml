@@ -13,4 +13,5 @@
     <color name="gray_600">#FF757575</color>
     <color name="placeholder_todo_add_edit">#A1FFFFFF</color>
     <color name="appBackground_color">#3D3D3D</color>
+    <color name="mainAppColor">#201c24</color>
 </resources>

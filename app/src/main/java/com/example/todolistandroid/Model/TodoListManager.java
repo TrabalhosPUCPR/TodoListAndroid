@@ -21,7 +21,6 @@ public class TodoListManager {
         todos.add(new Todo("do this", "yes finish this", new Date()));
         todos.add(new Todo("hello", "say hello", new Date()));
         todos.add(new Todo("last example", "make a better test list", new Date()));
-
     }
 
     public void addTodo(Todo todo){

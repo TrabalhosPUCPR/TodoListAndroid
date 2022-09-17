@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +49,27 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
 
         boolean isExpanded = todos.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
+        if(todo.isExpanded()) holder.arrow.setImageResource(R.drawable.ic_action_up_arrow);
+        else holder.arrow.setImageResource(R.drawable.ic_action_down_arrow);
+
+        holder.clickableLayout.setOnClickListener(view -> {
+            todo.expanded();
+            notifyItemChanged(position);
+        });
+
+        holder.removeFab.setOnClickListener(view -> {
+            TodoListManager.getInstance().removeTodo(position);
+            Toast.makeText(context, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
+            notifyDataSetChanged();
+        });
+
+        holder.editFab.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AddEditActivity.class);
+            intent.putExtra("type", 1);
+            intent.putExtra("index", position);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -59,10 +80,12 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
     public class todoHolder extends RecyclerView.ViewHolder{
 
         LinearLayout todoLayout, expandableLayout;
+        FrameLayout clickableLayout;
         TextView name;
         TextView desc;
         TextView date;
         FloatingActionButton editFab, removeFab;
+        ImageView arrow;
 
         public todoHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,30 +95,11 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             this.desc = itemView.findViewById(R.id.todoList_desc);
             this.date = itemView.findViewById(R.id.todoList_date);
             this.expandableLayout = itemView.findViewById(R.id.expandable_todo);
+            this.clickableLayout = itemView.findViewById(R.id.todoList_mainDetails);
 
             this.editFab = itemView.findViewById(R.id.fab_edit_todo);
             this.removeFab = itemView.findViewById(R.id.fab_delete_todo);
-
-
-            this.name.setOnClickListener(view -> {
-                Todo todo = todos.get(getAdapterPosition());
-                todo.expanded();
-                notifyItemChanged(getAdapterPosition());
-            });
-
-            this.removeFab.setOnClickListener(view -> {
-                TodoListManager.getInstance().removeTodo(this.getAdapterPosition());
-                Toast.makeText(this.itemView.getContext(), "Removido com sucesso!", Toast.LENGTH_SHORT).show();
-                notifyDataSetChanged();
-            });
-
-            this.editFab.setOnClickListener(view -> {
-                Intent intent = new Intent(this.itemView.getContext(), AddEditActivity.class);
-                intent.putExtra("type", 1);
-                intent.putExtra("index", this.getAdapterPosition());
-                this.itemView.getContext().startActivity(intent);
-                // TODO: 9/16/22 arrumar retorno do resultado pra atualiza a tela 
-            });
+            arrow = itemView.findViewById(R.id.expanded_view_arrow);
         }
     }
 }

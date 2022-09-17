@@ -2,9 +2,12 @@ package com.example.todolistandroid.Controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +22,7 @@ public class AddEditActivity extends AppCompatActivity {
     private Todo newTodo;
     private EditText newName;
     private EditText newDesc;
+    int index;
 
     // TODO: 9/15/22
     // https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
@@ -34,10 +38,10 @@ public class AddEditActivity extends AppCompatActivity {
         newName = findViewById(R.id.todo_edit_name);
         newDesc = findViewById(R.id.todo_edit_desc);
         newDate = findViewById(R.id.todo_edit_date);
+        this.index = this.getIntent().getIntExtra("index", -1);
 
-        FloatingActionButton fabSave = findViewById(R.id.todo_edit_apply);
-        FloatingActionButton fabCancel = findViewById(R.id.todo_edit_cancel);
-        int index = this.getIntent().getIntExtra("index", -1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(index != -1 ? "Edit" : "Add");
 
         if(index != -1){
 
@@ -58,31 +62,38 @@ public class AddEditActivity extends AppCompatActivity {
                 newDesc.setText("");
             }
         });
+    }
 
-        fabSave.setOnClickListener(view -> {
-            newTodo.setName(newName.getText().toString());
-            newTodo.setDescription(newDesc.getText().toString());
-            // TODO: 9/15/22
-            // arruma esse ngc pra receber a data
-            //newTodo.setDate(newDate.getText().toString());
-            newTodo.setDate(new Date());
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.addedit_menu, menu);
+        return true;
+    }
 
-            if(this.getIntent().getIntExtra("index", -1) == -1){
-                TodoListManager.getInstance().addTodo(newTodo);
-            }else{
-                TodoListManager.getInstance().setTodo(index, newTodo);
-            }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(!(item.getItemId() == R.id.addedit_apply)){
+            return false;
+        }
+        newTodo.setName(newName.getText().toString());
+        newTodo.setDescription(newDesc.getText().toString());
 
-            Intent intent = new Intent();
-            intent.putExtra("TodoName", newTodo.getName());
-            setResult(RESULT_OK, intent);
-            finish();
-        });
+        // TODO: 9/15/22
+        // arruma esse ngc pra receber a data
+        //newTodo.setDate(newDate.getText().toString());
+        newTodo.setDate(new Date());
 
-        fabCancel.setOnClickListener(view -> {
-            setResult(RESULT_CANCELED);
-            finish();
-        });
+        if(index == -1){
+            TodoListManager.getInstance().addTodo(newTodo);
+        }else{
+            TodoListManager.getInstance().setTodo(index, newTodo);
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra("TodoName", newTodo.getName());
+        setResult(RESULT_OK, intent);
+        finish();
+        return true;
     }
 }
 
