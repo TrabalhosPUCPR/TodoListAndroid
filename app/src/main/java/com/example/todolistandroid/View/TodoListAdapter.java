@@ -1,6 +1,5 @@
 package com.example.todolistandroid.View;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -77,6 +76,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             this.editFab = itemView.findViewById(R.id.fab_edit_todo);
             this.removeFab = itemView.findViewById(R.id.fab_delete_todo);
 
+
             this.name.setOnClickListener(view -> {
                 Todo todo = todos.get(getAdapterPosition());
                 todo.expanded();
@@ -94,6 +94,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
                 intent.putExtra("type", 1);
                 intent.putExtra("index", this.getAdapterPosition());
                 this.itemView.getContext().startActivity(intent);
+                // TODO: 9/16/22 arrumar retorno do resultado pra atualiza a tela 
             });
         }
     }
