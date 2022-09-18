@@ -2,6 +2,8 @@ package com.example.todolistandroid.Model;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +17,9 @@ public class Todo {
 
     public static final String timeFormat = "HH:mm";
     public static final String dateFormat = "dd/MM/yyyy";
+
+    public static final String nullTimePlaceHolder = "-:-";
+    public static final String nullDatePlaceHolder = "-/-/-";
 
     public Todo() {}
 
@@ -43,12 +48,13 @@ public class Todo {
     }
 
     public String getDate() {
-        if(this.date == null) return "-/-/-";
+        if(this.date == null) return Todo.nullDatePlaceHolder;
         return new SimpleDateFormat(this.dateFormat).format(this.date);
     }
 
     public void setDate(Date date) {
         this.date = date;
+        Log.d("DEBUG", date.toString());
     }
 
     public boolean isExpanded() {
@@ -64,15 +70,15 @@ public class Todo {
     }
 
     public String getTime() {
-        if(this.time == null) return "-:-";
-        return new SimpleDateFormat(timeFormat).format(this.time);
+        if(this.time == null) return Todo.nullTimePlaceHolder;
+        return new SimpleDateFormat(Todo.timeFormat).format(this.time);
     }
 
     @Override
     public String toString() {
         return  name + '\n' +
                 description + '\n' +
-                getDate() + '\n' +
-                getTime() + '\n';
+                (getDate().equals(Todo.nullDatePlaceHolder) ? "" : getDate()) + '\n' +
+                (getTime().equals(Todo.nullTimePlaceHolder) ? "" : getTime()) + '\n';
     }
 }

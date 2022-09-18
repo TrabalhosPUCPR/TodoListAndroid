@@ -1,6 +1,5 @@
 package com.example.todolistandroid.Controller;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -59,7 +58,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
 
         newDate.setOnClickListener(view -> {
-            DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> newDate.setText(String.format("%02d/%02d/%04d", day, month, year));
+            DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> newDate.setText(String.format("%02d/%02d/%04d", day, month + 1, year));
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.setTitle("Selecione o dia");

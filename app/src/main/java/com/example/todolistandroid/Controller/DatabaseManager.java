@@ -1,6 +1,7 @@
 package com.example.todolistandroid.Controller;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.todolistandroid.Model.Todo;
 import com.example.todolistandroid.Model.TodoListManager;
@@ -14,6 +15,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class DatabaseManager {
     private final String FILENAME = "database.txt";
@@ -29,12 +31,9 @@ public class DatabaseManager {
             OutputStream outputStream = context.openFileOutput(FILENAME, Context.MODE_APPEND);
             OutputStreamWriter writer = new OutputStreamWriter(outputStream);
             writer.write(todo.toString());
-            writer.flush();
             writer.close();
             outputStream.close();
             return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,14 +47,11 @@ public class DatabaseManager {
             for(Todo todo : TodoListManager.getInstance().getTodos()) {
                 writer.write(todo.toString());
             }
-            writer.flush();
             writer.close();
             outputStream.close();
             return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("UPDATEDATA", "UPDATE: " + e);
         }
         return false;
     }
@@ -68,19 +64,23 @@ public class DatabaseManager {
                 Todo todo = new Todo();
                 todo.setName(reader.readLine());
                 todo.setDescription(reader.readLine());
-                todo.setDate(new SimpleDateFormat(Todo.dateFormat).parse(reader.readLine()));
-                todo.setTime(new SimpleDateFormat(Todo.timeFormat).parse(reader.readLine()));
-
+                try{
+                    todo.setDate(new SimpleDateFormat(Todo.dateFormat).parse(reader.readLine()));
+                }catch (ParseException ignored){
+                    Log.d("LOADDATA", "TIME: " + ignored);
+                }
+                try{
+                    todo.setTime(Objects.requireNonNull(new SimpleDateFormat(Todo.timeFormat).parse(reader.readLine())));
+                }catch (ParseException ignored){
+                    Log.d("LOADDATA", "TIME: " + ignored);
+                }
                 TodoListManager.getInstance().addTodo(todo);
             }
             reader.close();
             inputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d("LOADDATA", e.toString());
         }
     }
 }
