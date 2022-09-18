@@ -1,5 +1,8 @@
 package com.example.todolistandroid.Model;
 
+import android.util.Log;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,6 +15,8 @@ public class Todo {
 
     public static final String timeFormat = "HH:mm";
     public static final String dateFormat = "dd/MM/yyyy";
+
+    public Todo() {}
 
     public Todo(String name, String description, Date date, Date time) {
         this.name = name;
@@ -60,6 +65,14 @@ public class Todo {
 
     public String getTime() {
         if(this.time == null) return "-:-";
-        return new SimpleDateFormat(this.timeFormat).format(this.time);
+        return new SimpleDateFormat(timeFormat).format(this.time);
+    }
+
+    @Override
+    public String toString() {
+        return  name + '\n' +
+                description + '\n' +
+                getDate() + '\n' +
+                getTime() + '\n';
     }
 }

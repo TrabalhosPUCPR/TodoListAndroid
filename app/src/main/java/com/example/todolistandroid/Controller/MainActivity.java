@@ -37,12 +37,16 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
     private ActivityResultLauncher<Intent> resultAddTodo;
     private ActivityResultLauncher<Intent> resultEditTodo;
 
+    private DatabaseManager data;
+
     TextView emptyPlaceholder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        data = new DatabaseManager(this);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_help);
@@ -62,12 +66,14 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
                 rcvTodos.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "Tarefa adicionada", Toast.LENGTH_SHORT).show();
                 todoAdapter.notifyItemChanged(TodoListManager.getInstance().getTodos().size() - 1);
+                data.writeData(TodoListManager.getInstance().getTodo(TodoListManager.getInstance().getTodos().size() - 1));
             }
         });
         resultEditTodo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if(result.getResultCode() == RESULT_OK) {
                 Toast.makeText(this, "Tarefa editada", Toast.LENGTH_SHORT).show();
                 todoAdapter.notifyItemChanged(result.getData().getIntExtra("index", -1));
+                data.updateData();
             }
         });
     }
@@ -140,5 +146,6 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
         this.todoAdapter.notifyItemRangeChanged(position, TodoListManager.getInstance().getTodos().size());
         updateIfRcvEmpty();
         Toast.makeText(this, "Tarefa removida", Toast.LENGTH_SHORT).show();
+        data.updateData();
     }
 }

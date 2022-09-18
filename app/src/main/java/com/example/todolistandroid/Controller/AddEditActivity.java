@@ -1,5 +1,6 @@
 package com.example.todolistandroid.Controller;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class AddEditActivity extends AppCompatActivity {
             newName.setText(newTodo.getName());
             newDesc.setText(newTodo.getDescription());
             newDate.setText(newTodo.getDate());
+            newTime.setText(newTodo.getTime());
         }
 
         newDate.setOnClickListener(view -> {
