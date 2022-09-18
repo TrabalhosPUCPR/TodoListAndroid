@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -99,18 +100,30 @@
                 android:backgroundTint="#CC2121"
                 android:layout_gravity="start|center"
                 android:src="@android:drawable/ic_delete"
-                android:contentDescription="Delete" />
+                android:contentDescription="Delete"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_edit_todo"
+                app:layout_constraintLeft_toRightOf="@+id/fab_detail_todo"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:fabCustomSize="45dp"
+                android:src="@drawable/ic_action_edit"
+                android:backgroundTint="@color/mainAppColor"
+                android:contentDescription="Edit"
+                android:layout_gravity="start"
+                android:layout_marginStart="55dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_detail_todo"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 app:fabCustomSize="45dp"
                 android:layout_marginStart="10dp"
-                android:layout_gravity="center|end"
-                android:src="@drawable/ic_action_edit"
+                android:src="@drawable/ic_action_more"
                 android:backgroundTint="@color/mainAppColor"
-                android:contentDescription="Edit" />
+                android:contentDescription="Edit"
+                android:layout_gravity="end"/>
         </FrameLayout>
 
     </LinearLayout>

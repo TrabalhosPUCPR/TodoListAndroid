@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistandroid.Controller.AddEditActivity;
+import com.example.todolistandroid.Controller.TodoDetails;
 import com.example.todolistandroid.Model.OnAdapterItemClickListener;
 import com.example.todolistandroid.Model.Todo;
 import com.example.todolistandroid.R;
@@ -82,6 +83,12 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             intent.putExtra("index", position);
             resultEditTodo.launch(intent);
         });
+
+        holder.detailFab.setOnClickListener(view -> {
+            Intent intent = new Intent(context, TodoDetails.class);
+            intent.putExtra("index", position);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -96,7 +103,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
         TextView name;
         TextView desc;
         TextView dateTime;
-        FloatingActionButton editFab, removeFab;
+        FloatingActionButton editFab, removeFab, detailFab;
         ImageView arrow;
 
         public todoHolder(@NonNull View itemView) {
@@ -108,6 +115,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             this.dateTime = itemView.findViewById(R.id.todoList_dateTime);
             this.expandableLayout = itemView.findViewById(R.id.expandable_todo);
             this.clickableLayout = itemView.findViewById(R.id.todoList_mainDetails);
+            this.detailFab = itemView.findViewById(R.id.fab_detail_todo);
 
             this.editFab = itemView.findViewById(R.id.fab_edit_todo);
             this.removeFab = itemView.findViewById(R.id.fab_delete_todo);
