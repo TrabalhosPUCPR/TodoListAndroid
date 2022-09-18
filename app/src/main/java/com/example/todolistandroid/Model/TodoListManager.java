@@ -1,5 +1,7 @@
 package com.example.todolistandroid.Model;
 
+import android.text.format.Time;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,13 +16,13 @@ public class TodoListManager {
     }
 
     private TodoListManager() {
-        todos.add(new Todo("yes", "yes", new Date()));
-        todos.add(new Todo("uau", "uauaua", new Date()));
-        todos.add(new Todo("test", "very nice test to do", new Date()));
-        todos.add(new Todo("foo", "bar", new Date()));
-        todos.add(new Todo("do this", "yes finish this", new Date()));
-        todos.add(new Todo("hello", "say hello", new Date()));
-        todos.add(new Todo("last example", "make a better test list", new Date()));
+        todos.add(new Todo("yes", "yes", new Date(), new Date()));
+        todos.add(new Todo("uau", "uauaua", new Date(), new Date()));
+        todos.add(new Todo("test", "very nice test to do", new Date(), new Date()));
+        todos.add(new Todo("foo", "bar", new Date(), new Date()));
+        todos.add(new Todo("do this", "yes finish this", new Date(), new Date()));
+        todos.add(new Todo("hello", "say hello", new Date(), new Date()));
+        todos.add(new Todo("last example", "make a better test list", new Date(), new Date()));
     }
 
     public void addTodo(Todo todo){

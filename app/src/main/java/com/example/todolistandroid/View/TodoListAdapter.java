@@ -20,6 +20,7 @@ import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHolder> {
@@ -45,7 +46,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
 
         holder.name.setText(todo.getName());
         holder.desc.setText(todo.getDescription());
-        holder.date.setText(todo.getDate().toString());
+        holder.dateTime.setText(todo.getDate() + " | " + todo.getTime());
 
         boolean isExpanded = todos.get(position).isExpanded();
         holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -84,7 +85,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
         FrameLayout clickableLayout;
         TextView name;
         TextView desc;
-        TextView date;
+        TextView dateTime;
         FloatingActionButton editFab, removeFab;
         ImageView arrow;
 
@@ -94,7 +95,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             this.todoLayout = itemView.findViewById(R.id.todoLayout);
             this.name = itemView.findViewById(R.id.todoList_name);
             this.desc = itemView.findViewById(R.id.todoList_desc);
-            this.date = itemView.findViewById(R.id.todoList_date);
+            this.dateTime = itemView.findViewById(R.id.todoList_dateTime);
             this.expandableLayout = itemView.findViewById(R.id.expandable_todo);
             this.clickableLayout = itemView.findViewById(R.id.todoList_mainDetails);
 

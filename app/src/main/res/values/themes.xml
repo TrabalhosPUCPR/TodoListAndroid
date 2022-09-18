@@ -16,5 +16,7 @@
         <item name="homeAsUpIndicator">@drawable/ic_action_back_arrow</item>
         <item name="materialAlertDialogTheme">@style/CustomAlertDialog</item>
         <item name="floatingActionButtonStyle">@style/FloatingActionButton</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+        <item name="backgroundTint">@color/white</item>
     </style>
 </resources>

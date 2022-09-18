@@ -1,19 +1,24 @@
 package com.example.todolistandroid.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Todo {
 
     private String name;
     private String description;
-    private Date date;
+    private Date date, time;
     private boolean expanded;
 
-    public Todo(String name, String description, Date date) {
+    public static final String timeFormat = "HH:mm";
+    public static final String dateFormat = "dd/MM/yyyy";
+
+    public Todo(String name, String description, Date date, Date time) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.expanded = false;
+        this.time = time;
     }
 
     public String getName() {
@@ -32,8 +37,9 @@ public class Todo {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        if(this.date == null) return "-/-/-";
+        return new SimpleDateFormat(this.dateFormat).format(this.date);
     }
 
     public void setDate(Date date) {
@@ -46,5 +52,14 @@ public class Todo {
 
     public void expanded() {
         this.expanded = !this.expanded;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getTime() {
+        if(this.time == null) return "-:-";
+        return new SimpleDateFormat(this.timeFormat).format(this.time);
     }
 }

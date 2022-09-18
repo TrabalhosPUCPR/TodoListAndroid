@@ -1,11 +1,17 @@
 package com.example.todolistandroid.Controller;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.Time;
+import android.text.method.DateTimeKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +22,19 @@ import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class AddEditActivity extends AppCompatActivity {
     private Todo newTodo;
     private EditText newName;
     private EditText newDesc;
+    private EditText newTime;
+
     int index;
 
     // TODO: 9/15/22
@@ -33,18 +46,21 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_todo);
 
-        newTodo = new Todo("", "", new Date());
+        newTodo = new Todo("", "", null, null);
 
         newName = findViewById(R.id.todo_edit_name);
         newDesc = findViewById(R.id.todo_edit_desc);
         newDate = findViewById(R.id.todo_edit_date);
+        newTime = findViewById(R.id.todo_edit_time);
         this.index = this.getIntent().getIntExtra("index", -1);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        DatePicker.OnDateChangedListener date = (datePicker, year, month, day) -> {
+        };
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(index != -1 ? "Edit" : "Add");
 
         if(index != -1){
-
             newTodo = TodoListManager.getInstance().getTodo(index);
 
             newName.setText(newTodo.getName());
@@ -52,15 +68,19 @@ public class AddEditActivity extends AppCompatActivity {
             newDate.setText(newTodo.getDate().toString());
         }
 
-        newName.setOnClickListener(view -> {
-            if(newName.getText().toString().equals(getString(R.string.todo_value_name))){
-                newName.setText("");
-            }
+        newDate.setOnClickListener(view -> {
+            DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> newDate.setText(String.format("%d/%d/%d", day, month, year));
+            Calendar calendar = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.setTitle("Selecione o dia");
+            datePickerDialog.show();
         });
-        newDesc.setOnClickListener(view -> {
-            if(newDesc.getText().toString().equals(getString(R.string.todo_value_desc))){
-                newDesc.setText("");
-            }
+        newTime.setOnClickListener(view -> {
+            TimePickerDialog.OnTimeSetListener timePicker = (timePicker1, hour, minute) -> newTime.setText(String.format("%02d:%02d", hour, minute));
+            Calendar calendar = Calendar.getInstance();
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, timePicker, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+            timePickerDialog.setTitle("Selecione o horario");
+            timePickerDialog.show();
         });
     }
 
@@ -75,13 +95,22 @@ public class AddEditActivity extends AppCompatActivity {
         if(!(item.getItemId() == R.id.addedit_apply)){
             return false;
         }
+        if (newName.getText().toString().isEmpty()){
+            Toast.makeText(this, "Nome não pode estar vazio!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         newTodo.setName(newName.getText().toString());
         newTodo.setDescription(newDesc.getText().toString());
 
-        // TODO: 9/15/22
-        // arruma esse ngc pra receber a data
-        //newTodo.setDate(newDate.getText().toString());
-        newTodo.setDate(new Date());
+        try {
+            if (!newDate.getText().toString().isEmpty())
+                newTodo.setDate(new SimpleDateFormat(Todo.dateFormat).parse(newDate.getText().toString()));
+
+            if (!newTime.getText().toString().isEmpty())
+                newTodo.setTime(new SimpleDateFormat(Todo.timeFormat).parse(newTime.getText().toString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         if(index == -1){
             TodoListManager.getInstance().addTodo(newTodo);

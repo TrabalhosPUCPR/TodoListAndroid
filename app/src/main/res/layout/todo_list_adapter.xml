@@ -22,7 +22,7 @@
             android:id="@+id/todoList_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/todo_value_name"
             android:textSize="@dimen/todoList_Namefontsize"
             android:textColor="#5A5A5A"
             android:layout_marginStart="15dp"
@@ -54,7 +54,7 @@
             android:id="@+id/todoList_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description"
+            android:text="@string/todo_value_desc"
             android:textSize="@dimen/todoList_fontsize"
             android:textColor="@color/gray_600"
             android:layout_marginStart="15sp"
@@ -69,15 +69,15 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/todoList_date"
+            android:id="@+id/todoList_dateTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15sp"
             android:textColor="@color/gray_600"
-            android:text="date"
+            android:text="@string/todo_value_dateTime"
             android:textSize="@dimen/todoList_fontsize"
-            android:layout_marginBottom="10sp"
-            android:textIsSelectable="true"/>
+            android:textIsSelectable="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="8dp"/>
 
         <View
             android:layout_width="match_parent"
