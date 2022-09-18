@@ -4,13 +4,9 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.text.method.DateTimeKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,13 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.todolistandroid.Model.Todo;
 import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class AddEditActivity extends AppCompatActivity {
@@ -37,8 +30,6 @@ public class AddEditActivity extends AppCompatActivity {
 
     int index;
 
-    // TODO: 9/15/22
-    // https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
     private EditText newDate;
 
     @Override
@@ -54,9 +45,6 @@ public class AddEditActivity extends AppCompatActivity {
         newTime = findViewById(R.id.todo_edit_time);
         this.index = this.getIntent().getIntExtra("index", -1);
 
-        DatePicker.OnDateChangedListener date = (datePicker, year, month, day) -> {
-        };
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(index != -1 ? "Edit" : "Add");
 
@@ -65,11 +53,11 @@ public class AddEditActivity extends AppCompatActivity {
 
             newName.setText(newTodo.getName());
             newDesc.setText(newTodo.getDescription());
-            newDate.setText(newTodo.getDate().toString());
+            newDate.setText(newTodo.getDate());
         }
 
         newDate.setOnClickListener(view -> {
-            DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> newDate.setText(String.format("%d/%d/%d", day, month, year));
+            DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> newDate.setText(String.format("%02d/%02d/%04d", day, month, year));
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, datePicker, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.setTitle("Selecione o dia");
@@ -120,6 +108,7 @@ public class AddEditActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         intent.putExtra("TodoName", newTodo.getName());
+        intent.putExtra("index", index);
         setResult(RESULT_OK, intent);
         finish();
         return true;

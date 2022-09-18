@@ -1,5 +1,7 @@
 package com.example.todolistandroid.View;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,18 +11,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolistandroid.Controller.AddEditActivity;
+import com.example.todolistandroid.Model.OnAdapterItemClickListener;
 import com.example.todolistandroid.Model.Todo;
-import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHolder> {
@@ -28,9 +28,15 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
     private List<Todo> todos;
     private Context context;
 
-    public TodoListAdapter(List<Todo> todos, Context context){
+    private OnAdapterItemClickListener listener;
+
+    private ActivityResultLauncher<Intent> resultEditTodo;
+
+    public TodoListAdapter(List<Todo> todos, Context context, OnAdapterItemClickListener listener, ActivityResultLauncher<Intent> resultEditTodo) {
         this.todos = todos;
         this.context = context;
+        this.resultEditTodo = resultEditTodo;
+        this.listener = listener;
     }
 
     @NonNull
@@ -60,17 +66,21 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
         });
 
         holder.removeFab.setOnClickListener(view -> {
-            TodoListManager.getInstance().removeTodo(position);
-            Toast.makeText(context, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, TodoListManager.getInstance().getTodos().size());
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
+            dialog.setTitle(context.getString(R.string.title));
+            dialog.setMessage("Voce tem certeza que gostaria de remover?");
+            dialog.setPositiveButton("Sim", (dialogInterface, i) -> {
+                listener.onAdapterItemClickListener(position);
+            });
+            dialog.setNegativeButton("Não", null);
+            dialog.show();
         });
 
         holder.editFab.setOnClickListener(view -> {
             Intent intent = new Intent(context, AddEditActivity.class);
             intent.putExtra("type", 1);
             intent.putExtra("index", position);
-            context.startActivity(intent);
+            resultEditTodo.launch(intent);
         });
     }
 
