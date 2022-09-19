@@ -82,8 +82,7 @@ public class AddEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(!(item.getItemId() == R.id.addedit_apply)){
-            Intent intent = new Intent();
-            setResult(RESULT_CANCELED, intent);
+            setResult(RESULT_CANCELED);
             finish();
             return true;
         }
