@@ -82,7 +82,10 @@ public class AddEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(!(item.getItemId() == R.id.addedit_apply)){
-            return false;
+            Intent intent = new Intent();
+            setResult(RESULT_CANCELED, intent);
+            finish();
+            return true;
         }
         if (newName.getText().toString().isEmpty()){
             Toast.makeText(this, "Nome não pode estar vazio!", Toast.LENGTH_SHORT).show();
