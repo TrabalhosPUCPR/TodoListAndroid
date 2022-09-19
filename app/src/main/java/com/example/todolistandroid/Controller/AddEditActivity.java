@@ -96,7 +96,10 @@ public class AddEditActivity extends AppCompatActivity {
         try {
             if (!newDate.getText().toString().isEmpty())
                 newTodo.setDate(new SimpleDateFormat(Todo.dateFormat).parse(newDate.getText().toString()));
-
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
             if (!newTime.getText().toString().isEmpty())
                 newTodo.setTime(new SimpleDateFormat(Todo.timeFormat).parse(newTime.getText().toString()));
         } catch (ParseException e) {
