@@ -33,6 +33,9 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
 
     private ActivityResultLauncher<Intent> resultEditTodo;
 
+    private static final int MAX_DESC_STRING_SIZE = 180;
+    private static final int MAX_NAME_STRING_SIZE = 20;
+
     public TodoListAdapter(List<Todo> todos, Context context, OnAdapterItemClickListener listener, ActivityResultLauncher<Intent> resultEditTodo) {
         this.todos = todos;
         this.context = context;
@@ -50,9 +53,19 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
     @Override
     public void onBindViewHolder(@NonNull TodoListAdapter.todoHolder holder, int position) {
         Todo todo = todos.get(position);
-
-        holder.name.setText(todo.getName());
-        holder.desc.setText(todo.getDescription());
+        String toPrint = "";
+        if(todo.getName().length() > MAX_NAME_STRING_SIZE){
+            toPrint = todo.getName().substring(0, MAX_NAME_STRING_SIZE) + "...";
+        }else{
+            toPrint = todo.getName();
+        }
+        holder.name.setText(toPrint);
+        if(todo.getDescription().length() > MAX_DESC_STRING_SIZE){
+            toPrint = todo.getDescription().substring(0, MAX_DESC_STRING_SIZE) + "...";
+        }else{
+            toPrint = todo.getDescription();
+        }
+        holder.desc.setText(toPrint);
         holder.dateTime.setText(todo.getDate() + " | " + todo.getTime());
 
         boolean isExpanded = todos.get(position).isExpanded();
@@ -70,9 +83,7 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.todoHo
             AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.CustomAlertDialog);
             dialog.setTitle(context.getString(R.string.title));
             dialog.setMessage("Voce tem certeza que gostaria de remover?");
-            dialog.setPositiveButton("Sim", (dialogInterface, i) -> {
-                listener.onAdapterItemClickListener(position);
-            });
+            dialog.setPositiveButton("Sim", (dialogInterface, i) -> listener.onAdapterItemClickListener(position));
             dialog.setNegativeButton("Não", null);
             dialog.show();
         });

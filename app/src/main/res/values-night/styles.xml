@@ -1,7 +1,16 @@
 <resources>
-
     <style name="Widget.Theme.TodoListAndroid.MyView" parent="">
-        <item name="android:background">@color/gray_600</item>
-        <item name="exampleColor">@color/light_blue_600</item>
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
+    </style>
+    <style name="CustomAlertDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:colorBackground">@color/mainAppColor</item>
+        <item name="buttonBarButtonStyle">@style/defaultDialogButtonStyle</item>
+    </style>
+    <style name="defaultDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="tint">@color/white</item>
     </style>
 </resources>

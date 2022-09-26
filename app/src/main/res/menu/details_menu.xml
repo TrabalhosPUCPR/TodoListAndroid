@@ -4,8 +4,9 @@
     <item
         android:id="@+id/menuAdd"
         app:showAsAction="always"
+        android:enabled="false"
         android:title="Add Todo"
-        android:icon="@drawable/ic_action_plus"
+        android:icon="@drawable/important_type"
         android:orderInCategory="0">
     </item>
 </menu>

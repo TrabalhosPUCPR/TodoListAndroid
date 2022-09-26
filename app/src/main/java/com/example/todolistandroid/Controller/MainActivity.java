@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.todolistandroid.Model.Database.TodoDAO;
 import com.example.todolistandroid.Model.OnAdapterItemClickListener;
 import com.example.todolistandroid.Model.TodoListManager;
 import com.example.todolistandroid.R;
@@ -37,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
     private ActivityResultLauncher<Intent> resultAddTodo;
     private ActivityResultLauncher<Intent> resultEditTodo;
 
-    private DatabaseManager data;
-
     TextView emptyPlaceholder;
 
     @Override
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        data = new DatabaseManager(this);
+        TodoListManager.getInstance().loadDatabase(this);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_help);
@@ -65,20 +64,18 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
                 emptyPlaceholder.setVisibility(View.GONE);
                 rcvTodos.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "Tarefa adicionada", Toast.LENGTH_SHORT).show();
-                todoAdapter.notifyItemChanged(TodoListManager.getInstance().getTodos().size() - 1);
-                data.writeData(TodoListManager.getInstance().getTodo(TodoListManager.getInstance().getTodos().size() - 1));
+                todoAdapter.notifyItemChanged(result.getData().getIntExtra("index", -1));
             }
         });
         resultEditTodo = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if(result.getResultCode() == RESULT_OK) {
                 Toast.makeText(this, "Tarefa editada", Toast.LENGTH_SHORT).show();
                 todoAdapter.notifyItemChanged(result.getData().getIntExtra("index", -1));
-                data.updateData();
             }
         });
     }
     public void updateIfRcvEmpty(){
-        if(TodoListManager.getInstance().getTodos().isEmpty()){
+        if(TodoListManager.getInstance().getList().isEmpty()){
             findViewById(R.id.rcvTodos).setVisibility(View.GONE);
             findViewById(R.id.emptyRecyclerPlaceHolder).setVisibility(View.VISIBLE);
         }else{
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(RecyclerView.VERTICAL);
         rcvTodos.setLayoutManager(llm);
-        todoAdapter = new TodoListAdapter(TodoListManager.getInstance().getTodos(), this, this, resultEditTodo);
+        todoAdapter = new TodoListAdapter(TodoListManager.getInstance().getList(), this, this, resultEditTodo);
         rcvTodos.setAdapter(todoAdapter);
     }
 
@@ -141,11 +138,10 @@ public class MainActivity extends AppCompatActivity implements OnAdapterItemClic
 
     @Override
     public void onAdapterItemClickListener(int position) {
-        TodoListManager.getInstance().removeTodo(position);
+        TodoListManager.getInstance().remove(position);
         this.todoAdapter.notifyItemRemoved(position);
-        this.todoAdapter.notifyItemRangeChanged(position, TodoListManager.getInstance().getTodos().size());
+        this.todoAdapter.notifyItemRangeChanged(position, TodoListManager.getInstance().getList().size());
         updateIfRcvEmpty();
         Toast.makeText(this, "Tarefa removida", Toast.LENGTH_SHORT).show();
-        data.updateData();
     }
 }

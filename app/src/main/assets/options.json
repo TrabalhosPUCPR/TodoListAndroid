@@ -1,0 +1,13 @@
+{
+  "options": [
+    {
+      "type": "unimportant"
+    },
+    {
+      "type": "important"
+    },
+    {
+      "type": "urgent"
+    }
+  ]
+}

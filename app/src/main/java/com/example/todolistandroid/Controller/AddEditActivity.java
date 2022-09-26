@@ -37,7 +37,7 @@ public class AddEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_todo);
 
-        newTodo = new Todo("", "", null, null);
+        newTodo = new Todo();
 
         newName = findViewById(R.id.todo_edit_name);
         newDesc = findViewById(R.id.todo_edit_desc);
@@ -49,7 +49,7 @@ public class AddEditActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(index != -1 ? "Edit" : "Add");
 
         if(index != -1){
-            newTodo = TodoListManager.getInstance().getTodo(index);
+            newTodo = TodoListManager.getInstance().get(index);
 
             newName.setText(newTodo.getName());
             newDesc.setText(newTodo.getDescription());
@@ -107,9 +107,9 @@ public class AddEditActivity extends AppCompatActivity {
         }
 
         if(index == -1){
-            TodoListManager.getInstance().addTodo(newTodo);
+            TodoListManager.getInstance().add(newTodo);
         }else{
-            TodoListManager.getInstance().setTodo(index, newTodo);
+            TodoListManager.getInstance().edit(newTodo, index);
         }
 
         Intent intent = new Intent();
