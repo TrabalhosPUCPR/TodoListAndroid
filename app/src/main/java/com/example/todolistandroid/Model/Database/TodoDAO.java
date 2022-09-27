@@ -157,9 +157,9 @@ public class TodoDAO extends SQLiteOpenHelper implements DAO<Todo>{
 
         sqLiteDatabase.execSQL(createTableSQL);
 
-        createTableSQL = "CREATE TABLE IF NOT EXISTS" + DB_TABLE_TYPES + " (";
-        createTableSQL += TYPES_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT";
-        createTableSQL += TYPES_COL_DESC + "TEXT NOT NULL);";
+        createTableSQL = "CREATE TABLE IF NOT EXISTS " + DB_TABLE_TYPES + " (";
+        createTableSQL += TYPES_COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,";
+        createTableSQL += TYPES_COL_DESC + " TEXT NOT NULL);";
 
         sqLiteDatabase.execSQL(createTableSQL);
 
