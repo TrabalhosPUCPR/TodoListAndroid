@@ -163,9 +163,10 @@ public class TodoDAO extends SQLiteOpenHelper implements DAO<Todo>{
 
         sqLiteDatabase.execSQL(createTableSQL);
 
-        loadTypesJSON();
+        // loadTypesJSON();
     }
 
+    /*
     private void loadTypesJSON(){
         try {
             InputStream inputStream = context.getAssets().open("options.json");
@@ -195,6 +196,7 @@ public class TodoDAO extends SQLiteOpenHelper implements DAO<Todo>{
             e.printStackTrace();
         }
     }
+     */
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int currentVersion, int newVersion) {
